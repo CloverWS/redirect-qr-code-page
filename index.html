@@ -51,6 +51,10 @@
   <div class="error">The video link is temporarily unavailable. Please try again later.</div>
 
   <script>
+  // Get the id parameter from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const videoId = urlParams.get('id');
+
   // Read config file and redirect directly (skip validation)
   fetch('config.json')
     .then(response => {
@@ -58,14 +62,18 @@
       return response.json();
     })
     .then(data => {
-      const targetUrl = data.targetUrl;
-      if (!targetUrl) throw new Error('Target URL not configured');
+      if (!videoId) throw new Error('No video ID provided');
+      const targetUrl = data.urls[videoId];
+      if (!targetUrl) throw new Error(`No URL found for video ID: ${videoId}`);
       // Directly redirect, skip link validation (CORS workaround)
-      setTimeout(() => window.location.href = targetUrl, 2000);
+      setTimeout(() => window.location.href = targetUrl, 1000);
     })
-    .catch(() => {
+    .catch((error) => {
       document.querySelector('.loading').style.display = 'none';
       document.querySelector('.error').style.display = 'block';
+      document.querySelector('.error').textContent = error.message === 'No video ID provided' 
+        ? 'Please provide a video ID in the URL (e.g., ?id=1)' 
+        : 'The video link is temporarily unavailable. Please try again later.';
     });
 </script>
 </body>

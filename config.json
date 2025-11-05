@@ -1,3 +1,7 @@
 {
-  "targetUrl": "https://www.tiktok.com/@kloeenicole/video/7561207646624288013?is_from_webapp=1&sender_device=pc" 
+  "urls": {
+    "1": "https://www.tiktok.com/@kloeenicole/video/7561207646624288013?is_from_webapp=1&sender_device=pc",
+    "2": "https://www.tiktok.com/@gemini123071/video/7538685439406886175?is_from_webapp=1&sender_device=pc",
+    "3": "https://www.tiktok.com/@tilney00/video/7547541720280370463?is_from_webapp=1&sender_device=pc"
+  }
 }
