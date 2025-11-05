@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>修改跳转地址</title>
+  <style>
+    body {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 0 20px;
+      font-family: sans-serif;
+    }
+    .container {
+      padding: 20px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      background: #1677ff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .message {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 4px;
+      display: none;
+    }
+    .success {
+      background: #f0f9eb;
+      color: #52c41a;
+    }
+    .error {
+      background: #fff2f0;
+      color: #ff4d4f;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>修改跳转目标地址</h2>
+    <input type="text" id="urlInput" placeholder="请输入新的抖音视频链接">
+    <button onclick="saveUrl()">保存修改</button>
+    <div class="message success" id="successMsg">修改成功！新地址将立即生效</div>
+    <div class="message error" id="errorMsg">修改失败，请稍后重试</div>
+  </div>
+
+  <script>
+    // 加载当前配置的地址
+    fetch('config.json')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('urlInput').value = data.targetUrl || '';
+      });
+
+    // 保存新地址（实际部署时需要后端支持，这里是前端模拟）
+    function saveUrl() {
+      const newUrl = document.getElementById('urlInput').value.trim();
+      if (!newUrl) {
+        alert('请输入有效的链接');
+        return;
+      }
+
+      // 注意：纯前端无法直接修改本地文件，这里仅做演示
+      // 实际部署时需要后端接口（如Node.js/PHP）处理文件写入
+      console.log('即将保存新地址：', newUrl);
+      
+      // 模拟保存成功
+      document.getElementById('successMsg').style.display = 'block';
+      document.getElementById('errorMsg').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
