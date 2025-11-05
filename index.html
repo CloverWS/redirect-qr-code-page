@@ -3,31 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- 添加 TikTok 深度链接元标签 -->
-  <meta property="al:ios:url" content="tiktok://video/7561207646624288013" />
-  <meta property="al:ios:app_name" content="TikTok" />
-  <meta property="al:android:url" content="tiktok://video/7561207646624288013" />
-  <meta property="al:android:app_name" content="TikTok" />
-  <!-- 网页标题 -->
-  <title>跳转中...</title>
-  <style>/* 保持原有样式 */</style>
+  <title>Redirecting...</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: sans-serif;
+    }
+    .loading {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .error {
+      color: #ff4d4f;
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <div class="loading">正在跳转到视频...</div>
-  <div class="error">视频链接暂时无法访问，请稍后再试</div>
+  <img src="logo.jpg" alt="Logo" style="display:block;margin:0 auto 24px;width:120px;height:auto;" />
+  <div class="loading">Redirecting to video...</div>
+  <div class="copyright-hints" style="font-size:14px;color:#888;margin-bottom:16px;text-align:center;max-width:320px;">
+    If you believe there is a copyright issue, please contact us at <a href="mailto:xxxx@gmail.com">xxxx@gmail.com</a>.<br>
+    We apologize for any inconvenience and appreciate your understanding.
+  </div>
+  <div class="error">The video link is temporarily unavailable. Please try again later.</div>
 
   <script>
-    // 保持原有跳转逻辑（直接跳转到 TikTok 协议链接）
-    fetch('config.json')
-      .then(response => response.json())
-      .then(data => {
-        const targetUrl = data.targetUrl; // 这里应填入 tiktok://video/7561207646624288013
-        setTimeout(() => window.location.href = targetUrl, 500);
-      })
-      .catch(() => {
-        document.querySelector('.loading').style.display = 'none';
-        document.querySelector('.error').style.display = 'block';
-      });
-  </script>
+  // Read config file and redirect directly (skip validation)
+  fetch('config.json')
+    .then(response => {
+      if (!response.ok) throw new Error('Failed to load config file');
+      return response.json();
+    })
+    .then(data => {
+      const targetUrl = data.targetUrl;
+      if (!targetUrl) throw new Error('Target URL not configured');
+      // Directly redirect, skip link validation (CORS workaround)
+      setTimeout(() => window.location.href = targetUrl, 500);
+    })
+    .catch(() => {
+      document.querySelector('.loading').style.display = 'none';
+      document.querySelector('.error').style.display = 'block';
+    });
+</script>
 </body>
 </html>
