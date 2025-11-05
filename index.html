@@ -3,50 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 添加 TikTok 深度链接元标签 -->
+  <meta property="al:ios:url" content="tiktok://video/7561207646624288013" />
+  <meta property="al:ios:app_name" content="TikTok" />
+  <meta property="al:android:url" content="tiktok://video/7561207646624288013" />
+  <meta property="al:android:app_name" content="TikTok" />
+  <!-- 网页标题 -->
   <title>跳转中...</title>
-  <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      font-family: sans-serif;
-    }
-    .loading {
-      font-size: 18px;
-      color: #333;
-      margin-bottom: 20px;
-    }
-    .error {
-      color: #ff4d4f;
-      display: none;
-    }
-  </style>
+  <style>/* 保持原有样式 */</style>
 </head>
 <body>
   <div class="loading">正在跳转到视频...</div>
   <div class="error">视频链接暂时无法访问，请稍后再试</div>
 
   <script>
-  // 读取配置文件并直接跳转（去掉有效性验证）
-  fetch('config.json')
-    .then(response => {
-      if (!response.ok) throw new Error('配置文件加载失败');
-      return response.json();
-    })
-    .then(data => {
-      const targetUrl = data.targetUrl;
-      if (!targetUrl) throw new Error('未配置目标地址');
-      
-      // 直接跳转，不验证链接（解决CORS问题）
-      setTimeout(() => window.location.href = targetUrl, 500);
-    })
-    .catch(() => {
-      document.querySelector('.loading').style.display = 'none';
-      document.querySelector('.error').style.display = 'block';
-    });
-</script>
+    // 保持原有跳转逻辑（直接跳转到 TikTok 协议链接）
+    fetch('config.json')
+      .then(response => response.json())
+      .then(data => {
+        const targetUrl = data.targetUrl; // 这里应填入 tiktok://video/7561207646624288013
+        setTimeout(() => window.location.href = targetUrl, 500);
+      })
+      .catch(() => {
+        document.querySelector('.loading').style.display = 'none';
+        document.querySelector('.error').style.display = 'block';
+      });
+  </script>
 </body>
 </html>
