@@ -2,34 +2,50 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Redirecting...</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+    
     body {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
-      font-family: sans-serif;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 16px;
+      }
+    }
+
     .loading {
-      font-size: 18px;
+      font-size: clamp(16px, 4vw, 18px);
       color: #333;
       margin-bottom: 20px;
+      text-align: center;
     }
+
     .error {
       color: #ff4d4f;
       display: none;
+      text-align: center;
+      font-size: clamp(14px, 3.5vw, 16px);
     }
   </style>
 </head>
 <body>
-  <img src="logo.jpg" alt="Logo" style="display:block;margin:0 auto 24px;width:120px;height:auto;" />
+  <img src="logo.jpg" alt="Logo" style="display:block;margin:0 auto 24px;width:min(120px, 30vw);height:auto;" />
   <div class="loading">Redirecting to video...</div>
-  <div class="copyright-hints" style="font-size:14px;color:#888;margin-bottom:16px;text-align:center;max-width:320px;">
-    If you believe there is a copyright issue, please contact us at <a href="mailto:xxxx@gmail.com">xxxx@gmail.com</a>.<br>
+  <div class="copyright-hints" style="font-size:clamp(12px, 3vw, 14px);color:#888;margin-bottom:16px;text-align:center;max-width:min(90vw, 320px);padding:0 10px;">
+    If you believe there is a copyright issue, please contact us at <a href="mailto:xxxx@gmail.com" style="color:inherit;word-break:break-all;">xxxx@gmail.com</a>.<br>
     We apologize for any inconvenience and appreciate your understanding.
   </div>
   <div class="error">The video link is temporarily unavailable. Please try again later.</div>
@@ -45,7 +61,7 @@
       const targetUrl = data.targetUrl;
       if (!targetUrl) throw new Error('Target URL not configured');
       // Directly redirect, skip link validation (CORS workaround)
-      setTimeout(() => window.location.href = targetUrl, 500);
+      setTimeout(() => window.location.href = targetUrl, 5000);
     })
     .catch(() => {
       document.querySelector('.loading').style.display = 'none';
