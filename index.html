@@ -61,7 +61,7 @@
       const targetUrl = data.targetUrl;
       if (!targetUrl) throw new Error('Target URL not configured');
       // Directly redirect, skip link validation (CORS workaround)
-      setTimeout(() => window.location.href = targetUrl, 5000);
+      setTimeout(() => window.location.href = targetUrl, 2000);
     })
     .catch(() => {
       document.querySelector('.loading').style.display = 'none';
