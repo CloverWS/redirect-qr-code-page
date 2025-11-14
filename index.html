@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -8,7 +9,7 @@
     * {
       box-sizing: border-box;
     }
-    
+
     body {
       display: flex;
       flex-direction: column;
@@ -41,40 +42,48 @@
     }
   </style>
 </head>
+
 <body>
   <img src="logo.jpg" alt="Logo" style="display:block;margin:0 auto 24px;width:min(120px, 30vw);height:auto;" />
   <div class="loading">Redirecting to video...</div>
-  <div class="copyright-hints" style="font-size:clamp(12px, 3vw, 14px);color:#888;margin-bottom:16px;text-align:center;max-width:min(90vw, 320px);padding:0 10px;">
-    If you believe there is a copyright issue, please contact us at <a href="mailto:xxxx@gmail.com" style="color:inherit;word-break:break-all;">xxxx@gmail.com</a>.<br>
-    We apologize for any inconvenience and appreciate your understanding.
+  <div class="copyright-hints"
+    style="font-size:clamp(12px, 3vw, 14px);color:#888;margin-bottom:16px;text-align:center;max-width:min(90vw, 320px);padding:0 10px;">
+    Recommended TikTok creators for learning videos
+    QR codes in this booklet link to publicly available TikTok videos for learning reference only. All video content and
+    copyrights belong to the original TikTok creators.
+    This product does not store, reproduce, or redistribute any video content. The creators listed are not affiliated
+    with or endorsing this product unless explicitly stated.
+    If you are the content owner and have any concerns, please contact us at: <a href="mailto:ML15284430362@outlook.com"
+      style="color:inherit;word-break:break-all;">ML15284430362@outlook.com</a>.<br>
   </div>
   <div class="error">The video link is temporarily unavailable. Please try again later.</div>
 
   <script>
-  // Get the id parameter from URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const videoId = urlParams.get('id');
+    // Get the id parameter from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const videoId = urlParams.get('id');
 
-  // Read config file and redirect directly (skip validation)
-  fetch('config.json')
-    .then(response => {
-      if (!response.ok) throw new Error('Failed to load config file');
-      return response.json();
-    })
-    .then(data => {
-      if (!videoId) throw new Error('No video ID provided');
-      const targetUrl = data.urls[videoId];
-      if (!targetUrl) throw new Error(`No URL found for video ID: ${videoId}`);
-      // Directly redirect, skip link validation (CORS workaround)
-      setTimeout(() => window.location.href = targetUrl, 1000);
-    })
-    .catch((error) => {
-      document.querySelector('.loading').style.display = 'none';
-      document.querySelector('.error').style.display = 'block';
-      document.querySelector('.error').textContent = error.message === 'No video ID provided' 
-        ? 'Please provide a video ID in the URL (e.g., ?id=1)' 
-        : 'The video link is temporarily unavailable. Please try again later.';
-    });
-</script>
+    // Read config file and redirect directly (skip validation)
+    fetch('config.json')
+      .then(response => {
+        if (!response.ok) throw new Error('Failed to load config file');
+        return response.json();
+      })
+      .then(data => {
+        if (!videoId) throw new Error('No video ID provided');
+        const targetUrl = data.urls[videoId];
+        if (!targetUrl) throw new Error(`No URL found for video ID: ${videoId}`);
+        // Directly redirect, skip link validation (CORS workaround)
+        setTimeout(() => window.location.href = targetUrl, 1000);
+      })
+      .catch((error) => {
+        document.querySelector('.loading').style.display = 'none';
+        document.querySelector('.error').style.display = 'block';
+        document.querySelector('.error').textContent = error.message === 'No video ID provided'
+          ? 'Please provide a video ID in the URL (e.g., ?id=1)'
+          : 'The video link is temporarily unavailable. Please try again later.';
+      });
+  </script>
 </body>
+
 </html>
